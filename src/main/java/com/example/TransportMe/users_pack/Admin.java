@@ -1,6 +1,7 @@
 package com.example.TransportMe.users_pack;
 import java.util.List;
 
+import com.example.TransportMe.rides.Area;
 import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
 
@@ -57,6 +58,16 @@ public class Admin extends User{
         }
         System.out.println("User not found");
         return false;
+    }
+
+    // adding discount to area
+    public void addDiscount(Area area){
+        area.setHasDiscount(true);
+    }
+
+    // removing discount to area
+    public void removeDiscount(Area area){
+        area.setHasDiscount(false);
     }
 
     // no need for this function for now
