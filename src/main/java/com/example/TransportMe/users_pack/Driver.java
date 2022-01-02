@@ -5,6 +5,9 @@ import com.example.TransportMe.rides.Ride;
 
 import java.util.ArrayList;
 
+import com.example.TransportMe.Events.ArrivedToDestination;
+import com.example.TransportMe.Events.ArrivedToLocation;
+import com.example.TransportMe.Events.CaptainPutPrice;
 import com.example.TransportMe.Events.Event;
 import com.example.TransportMe.storage.RideListStorage;
 
@@ -12,13 +15,14 @@ public class Driver extends User{
     private int id;
     private String drivingLicense, nationalID;
     public ArrayList<Area> favAreas = new ArrayList<Area>();
+    Ride ride;
     // should be deleted
     // public ArrayList<Ride> availableRides = new ArrayList<Ride>();
     public ArrayList<Rating> list = new ArrayList<Rating>();
     private boolean availableForHandlingRequests;
     private boolean arrivedLocation=false;
     private boolean arrivedDestination=false;
-    Event E;
+    
     
     public Driver(String userName, String mobileNumber,String password,String email,String drivingLicense, String nationalID,String birthDate){
         super(userName, mobileNumber,password,email,birthDate);
@@ -43,7 +47,10 @@ public class Driver extends User{
         for(Ride ride: RideListStorage.rides){
             if(ride.getId()==rideId){
                 Offer offer = new Offer(ride,price,this);
-                E.setRidePrice(this.userName, price);
+                Event e=new CaptainPutPrice();
+                ((CaptainPutPrice) e).setRidePrice(this.userName,price);
+                ride.events.add(e);
+               
             }
         }
     }
@@ -80,14 +87,18 @@ public class Driver extends User{
     }
 
     public void arrivedToUserLocation(String userName){
-       this.arrivedLocation=true;
-       E.captainArrivedToLocation(this.userName, userName);
+        this.arrivedLocation=true;
+        Event e= new ArrivedToLocation();
+        ((ArrivedToLocation) e).captainArrivedToLocation(this.userName, userName) ;
+        ride.events.add(e);
     }   
-    
     public void arrivedToDestination(String userName){
         this.arrivedDestination=true;
-        E.captainArrivedToDestination(this.userName, userName);
+        Event e= new ArrivedToDestination();
+        ((ArrivedToDestination) e).captainArrivedToDestination(this.userName, userName);
+        ride.events.add(e);
      }  
+
     public boolean getAvailableForHandlingRequests(){return getAvailableForHandlingRequests();}
     public void setAvailableForHandlingRequests(boolean availableForHandlingRequests) {
         this.availableForHandlingRequests = availableForHandlingRequests;

@@ -1,19 +1,14 @@
 package com.example.TransportMe.users_pack;
 import com.example.TransportMe.Events.Event;
+import com.example.TransportMe.Events.UserAcceptPrice;
 import com.example.TransportMe.rides.Offer;
 import com.example.TransportMe.rides.Ride;
-
-import java.util.List;
 
 public class Client extends User {
     private int id=0;
     private boolean hadFirstRide=false;
     Ride rideRequest=null;
-  Event E;
-    public Client(){
-        super();
-        this.id=count;
-    }
+  
     public Client(String userName, String mobileNumber,String password,String email,String birthDate){
         super(userName, mobileNumber,password,email,birthDate);
         this.id=count;
@@ -39,26 +34,25 @@ public class Client extends User {
             System.out.println("No drivers in Your area");
         }
     }*/
-    public List<Offer> viewOffers(){
+    public void viewOffers(){
         if(this.rideRequest==null)
         {
-            return null;
-//            System.out.println("no Rides yet.");
+            System.out.println("no Rides yet.");
         }
         else if(rideRequest.offers==null||rideRequest.offers.size()==0)
         {
-            return null;
-//            System.out.println("no offers yet.");
+            System.out.println("no offers yet.");
         }
 
-        return rideRequest.offers;
+        else {
+            for (Offer offer:rideRequest.offers){
+                offer.getOfferInfo();
+            }
+        }
     }
-    public boolean addRating(Driver dr , int r) {
-        if (dr==null)
-            return false;
+    public void addRating(Driver dr , int r) {
         Rating rate = new Rating(this,r);
         dr.list.add(rate);
-        return true;
     }
 
     public boolean acceptOffer(int id){
@@ -67,13 +61,14 @@ public class Client extends User {
             {
                 // means that the driver is now handling a request
                 offer.getDriver().setAvailableForHandlingRequests(false);
-                rideRequest.acceptedOffer=offer;
                 if (!hadFirstRide)
                     setHadFirstRide(true);
-                rideRequest.setFinalPrice(offer.offerPrice);
                 // request resolved
                 rideRequest = null;
-                E.acceptCaptainPrice(this.userName);
+                Event e =new UserAcceptPrice();
+                ((UserAcceptPrice) e).acceptCaptainPrice(this.userName);
+                rideRequest.events.add(e);
+                
                 return true;
             }
         }

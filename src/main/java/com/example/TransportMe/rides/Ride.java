@@ -21,7 +21,7 @@ public class Ride {
     public Offer acceptedOffer;
     private int numberOfPassengers;
 
-    public Event event;
+    public List<Event> events;
 
     public Ride(Client client, Area source, Area destination, String rideDate, int numberOfPassengers) {
         this.client = new Client();
