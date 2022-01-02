@@ -5,13 +5,14 @@ import com.example.TransportMe.rides.Ride;
 import java.util.ArrayList;
 
 import com.example.TransportMe.Events.Event;
+import com.example.TransportMe.storage.RideListStorage;
 
 public class Driver extends User{
     private int id;
     private String drivingLicense, nationalID;
     public ArrayList<String> favAreas = new ArrayList<String>();
     // should be deleted
-    public ArrayList<Ride> availableRides = new ArrayList<Ride>();
+    // public ArrayList<Ride> availableRides = new ArrayList<Ride>();
     public ArrayList<Rating> list = new ArrayList<Rating>();
     private boolean availableForHandlingRequests;
     private boolean arrivedLocation=false;
@@ -28,7 +29,7 @@ public class Driver extends User{
 
     public boolean listRides(String sourceArea){
         boolean found=false;
-        for (Ride ride: availableRides){
+        for (Ride ride: RideListStorage.rides){
             if(ride.getSource().equals(sourceArea)){
                 ride.getRideInfo();
                 found=true;
@@ -38,7 +39,7 @@ public class Driver extends User{
     }
 
     public void suggestPrice(double price,int rideId){
-        for(Ride ride: availableRides){
+        for(Ride ride: RideListStorage.rides){
             if(ride.getId()==rideId){
                 Offer offer = new Offer(ride,price,this);
                 E.setRidePrice(this.userName, price);

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class RideListStorage extends RideStorage{
     public static ArrayList<Ride> rides=new ArrayList<>() ;
-    public static ArrayList<Client> registeredClients=new ArrayList<>();
     public static ArrayList<Ride> ridesEvents=new ArrayList<>();
     @Override
     public boolean addRideRequest(Ride ride) {
@@ -30,11 +29,11 @@ public class RideListStorage extends RideStorage{
     }
 
     @Override
-    public ArrayList<Ride> getRide() {
-        return null;
+    public  ArrayList<Ride> getRides() {
+        return rides;
     }
     @Override
-    public ArrayList<Ride> getRidesEvents() {
+    public  ArrayList<Ride> getRidesEvents() {
 
         return ridesEvents;
     }
