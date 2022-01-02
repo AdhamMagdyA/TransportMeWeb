@@ -2,11 +2,11 @@ package com.example.TransportMe.rides;
 
 import com.example.TransportMe.users_pack.Driver;
 
-public class Offer {
+public class Offer extends RidePrice{
     private Ride ride;
     private static int count=0;
     private  int id=0;
-    private double price;
+    private RidePrice offerPrice;
     private Driver driver;
 
     public void addOffer(){
@@ -15,9 +15,9 @@ public class Offer {
 
     public Offer(Ride ride, double price, Driver driver) {
         this.ride = ride;
-        this.price = price;
         this.driver = driver;
         this.id=count;
+        setPrice(price);
         addOffer();
     }
     public void getOfferInfo(){
@@ -33,5 +33,11 @@ public class Offer {
 
     public int getId() {
         return id;
+    }
+
+
+    @Override
+    public void setPrice(double price) {
+        this.offerPrice.price=price;
     }
 }

@@ -14,16 +14,18 @@ public class Ride {
     private String source;
     private String destination;
     private UserStorage userStorage = new UserListStorage();
+    private String rideDate;
+    private RidePrice finalPrice;
     public List<Offer> offers;
     private int numberOfPassengers;
 
     public Event event;
 
-    public Ride(Client client,String source,String destination,int numberOfPassengers) {
+    public Ride(Client client,String source,String destination,String rideDate,int numberOfPassengers) {
         this.client =client;
         this.source=source;
         this.destination=destination;
-        this.numberOfPassengers = numberOfPassengers;
+        this.rideDate=rideDate;
         this.numberOfPassengers = numberOfPassengers;
         count++;
         this.id=count;
@@ -43,7 +45,6 @@ public class Ride {
     }
     public void addOffer(Offer offer){
         offers.add(offer);
-        System.out.println("Offer added successfully");
     }
 
     // transformed storage system and added new requirement
@@ -60,4 +61,8 @@ public class Ride {
         return found;
     }
 
+    public void setFinalPrice() {
+        // add each condition to apply discounts
+        this.finalPrice = finalPrice;
+    }
 }

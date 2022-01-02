@@ -9,8 +9,8 @@ public class Admin extends User{
 
     UserStorage userStorage = new UserListStorage();
 
-    public Admin(String userName, String mobileNumber,String password,String email){
-        super(userName, mobileNumber,password,email);
+    public Admin(String userName, String mobileNumber,String password){
+        super(userName, mobileNumber,password);
     }
     //transformed to use UserStorage instead of TransportMe
     public void addPendingRegistrations(Driver driver){
@@ -56,7 +56,7 @@ public class Admin extends User{
                 return true;
             }
         }
-        System.out.println("User not found");
+//        System.out.println("User not found");
         return false;
     }
 

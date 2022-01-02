@@ -10,6 +10,7 @@ public class Driver extends User{
     private int id;
     private String drivingLicense, nationalID;
     public ArrayList<String> favAreas = new ArrayList<String>();
+    // should be deleted
     public ArrayList<Ride> availableRides = new ArrayList<Ride>();
     public ArrayList<Rating> list = new ArrayList<Rating>();
     private boolean availableForHandlingRequests;
@@ -17,8 +18,8 @@ public class Driver extends User{
     private boolean arrivedDestination=false;
     Event E;
     
-    public Driver(String userName, String mobileNumber,String password,String email,String drivingLicense, String nationalID){
-        super(userName, mobileNumber,password,email);
+    public Driver(String userName, String mobileNumber,String password,String email,String drivingLicense, String nationalID,String birthDate){
+        super(userName, mobileNumber,password,email,birthDate);
         this.drivingLicense=drivingLicense;
         this.nationalID=nationalID;
         this.id=count;

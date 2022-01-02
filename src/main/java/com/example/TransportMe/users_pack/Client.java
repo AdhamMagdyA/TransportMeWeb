@@ -5,10 +5,11 @@ import com.example.TransportMe.rides.Ride;
 
 public class Client extends User {
     private int id=0;
+    private boolean hadFirstRide=false;
     Ride rideRequest=null;
   Event E;
-    public Client(String userName, String mobileNumber,String password,String email){
-        super(userName, mobileNumber,password,email);
+    public Client(String userName, String mobileNumber,String password,String email,String birthDate){
+        super(userName, mobileNumber,password,email,birthDate);
         this.id=count;
     }
     // Email attribute is optional
@@ -59,6 +60,8 @@ public class Client extends User {
             {
                 // means that the driver is now handling a request
                 offer.getDriver().setAvailableForHandlingRequests(false);
+                if (!hadFirstRide)
+                    setHadFirstRide(true);
                 // request resolved
                 rideRequest = null;
                 E.acceptCaptainPrice(this.userName);
@@ -68,4 +71,11 @@ public class Client extends User {
         return false;
     }
 
+    public void setHadFirstRide(boolean hadFirstRide) {
+        this.hadFirstRide = hadFirstRide;
+    }
+
+    public boolean isHadFirstRide() {
+        return hadFirstRide;
+    }
 }

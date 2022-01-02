@@ -23,7 +23,7 @@ public class Event {
 
     public String userName;
     public String captainName;
-   double price;
+    double price;
 
 
    public ArrayList<String> Event1 = new ArrayList<String>();
