@@ -2,11 +2,11 @@ package com.example.TransportMe.controllers;
 
 import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
+import com.example.TransportMe.users_pack.Admin;
 import com.example.TransportMe.users_pack.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -31,6 +31,20 @@ public class UserController {
     @GetMapping("/user")
     public User getLoggedIn(){
         return userStorage.loggedIn;
+    }
+
+    @GetMapping("/users")
+    public List<User> getRegisteredUsers(){
+        return userStorage.getRegisteredUsers();
+    }
+
+    @GetMapping("/user/{username}")
+    public User getUser(@PathVariable("username") String userName ){
+        for (User user : userStorage.getRegisteredUsers()){
+            if(user.getUsername().equals(userName))
+                return user;
+        }
+        return null;
     }
 
 }
