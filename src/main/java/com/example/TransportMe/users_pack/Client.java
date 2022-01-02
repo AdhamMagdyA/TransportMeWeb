@@ -4,6 +4,8 @@ import com.example.TransportMe.Events.UserAcceptPrice;
 import com.example.TransportMe.rides.Offer;
 import com.example.TransportMe.rides.Ride;
 
+import java.util.List;
+
 public class Client extends User {
     private int id=0;
     private boolean hadFirstRide=false;
@@ -34,25 +36,27 @@ public class Client extends User {
             System.out.println("No drivers in Your area");
         }
     }*/
-    public void viewOffers(){
+    public List<Offer> viewOffers(){
         if(this.rideRequest==null)
         {
-            System.out.println("no Rides yet.");
+            return null;
+//            System.out.println("no Rides yet.");
         }
         else if(rideRequest.offers==null||rideRequest.offers.size()==0)
         {
-            System.out.println("no offers yet.");
+            return null;
+//            System.out.println("no offers yet.");
         }
 
-        else {
-            for (Offer offer:rideRequest.offers){
-                offer.getOfferInfo();
-            }
-        }
+        return rideRequest.offers;
+
     }
-    public void addRating(Driver dr , int r) {
+    public boolean addRating(Driver dr , int r) {
+        if (dr==null)
+            return false;
         Rating rate = new Rating(this,r);
         dr.list.add(rate);
+        return false;
     }
 
     public boolean acceptOffer(int id){

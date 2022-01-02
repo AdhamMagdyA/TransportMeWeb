@@ -24,7 +24,7 @@ public class Ride {
     public List<Event> events;
 
     public Ride(Client client, Area source, Area destination, String rideDate, int numberOfPassengers) {
-        this.client = new Client();
+        this.client = client;
         this.source = source;
         this.destination = destination;
         this.rideDate = rideDate;
