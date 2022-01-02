@@ -6,7 +6,7 @@ public class Offer extends RidePrice{
     private Ride ride;
     private static int count=0;
     private  int id=0;
-    private RidePrice offerPrice;
+    public RidePrice offerPrice;
     private Driver driver;
 
 

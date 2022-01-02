@@ -6,6 +6,7 @@ import com.example.TransportMe.users_pack.Driver;
 import java.util.List;
 
 import com.example.TransportMe.Events.Event;
+import com.example.TransportMe.users_pack.User;
 
 public class Ride {
     private static int count = 0;
@@ -17,12 +18,13 @@ public class Ride {
     private String rideDate;
     private RidePrice finalPrice;
     public List<Offer> offers;
+    public Offer acceptedOffer;
     private int numberOfPassengers;
 
     public Event event;
 
     public Ride(Client client, Area source, Area destination, String rideDate, int numberOfPassengers) {
-        this.client = client;
+        this.client = new Client();
         this.source = source;
         this.destination = destination;
         this.rideDate = rideDate;
@@ -64,8 +66,9 @@ public class Ride {
         }
         return found;
     }
-
+    // we need to call this function when return the price to the client
     public void setFinalPrice(RidePrice ridePrice) {
+
         if (!client.HadFirstRide()) {
             finalPrice = new TenPDiscount(ridePrice);
             finalPrice.setPrice(ridePrice.getPrice());

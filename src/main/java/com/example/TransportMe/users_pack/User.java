@@ -14,6 +14,14 @@ public class User {
         this.birthDate=birthDate;
         count++;
     }
+    public User(){
+        this.userName = "";
+        this.mobileNumber = "";
+        this.password = "";
+        this.email = "email";
+        this.birthDate="birthDate";
+        count++;
+    }
     
     public User(String userName, String mobileNumber,String password){
         this.userName = userName;
