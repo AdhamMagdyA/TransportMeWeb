@@ -1,5 +1,6 @@
 package com.example.TransportMe.storage;
 
+import com.example.TransportMe.users_pack.Admin;
 import com.example.TransportMe.users_pack.Client;
 import com.example.TransportMe.users_pack.Driver;
 import com.example.TransportMe.users_pack.User;
@@ -16,6 +17,10 @@ public class UserListStorage extends UserStorage{
     public static ArrayList<Client> registeredClients=new ArrayList<>();
     
     public static ArrayList<Ride> ridesEvents=new ArrayList<>();
+
+    public UserListStorage(){
+        registeredUsers.add(new User("admin","011","admin","admin"));
+    }
 
     @Override
     public boolean addRegisteredUser(User user) {
@@ -50,6 +55,20 @@ public class UserListStorage extends UserStorage{
     @Override
     public List<Driver> getPendingRegistrations() {
         return pendingRegistrations;
+    }
+
+    @Override
+    public List<User> getRegisteredUsers() {
+        return this.registeredUsers;
+    }
+
+    @Override
+    public boolean searchRegisteredUsers(String userName) {
+        for (User user : registeredUsers){
+            if(user.getUsername().equals(userName))
+                return true;
+        }
+        return false;
     }
 
     @Override
