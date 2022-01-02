@@ -9,6 +9,7 @@ public class Offer extends RidePrice{
     private RidePrice offerPrice;
     private Driver driver;
 
+
     public void addOffer(){
         this.ride.addOffer(this);
     }

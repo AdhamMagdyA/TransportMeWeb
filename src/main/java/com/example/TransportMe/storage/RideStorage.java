@@ -9,7 +9,7 @@ public abstract class RideStorage {
     public abstract boolean addRideRequest( Ride ride );
     public abstract boolean removeRideRequest( Ride ride );
     public abstract boolean addRideOffer( Offer offer , int rideId );
-    public abstract ArrayList<Ride> getRide();
+    public abstract  ArrayList<Ride> getRides();
     public abstract ArrayList<Ride> getRidesEvents();
 
 

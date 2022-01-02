@@ -75,7 +75,7 @@ public class Client extends User {
         this.hadFirstRide = hadFirstRide;
     }
 
-    public boolean isHadFirstRide() {
+    public boolean HadFirstRide() {
         return hadFirstRide;
     }
 }
