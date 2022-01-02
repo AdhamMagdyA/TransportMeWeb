@@ -1,17 +1,13 @@
 package com.example.TransportMe.Events;
-
-import com.example.TransportMe.storage.UserListStorage;
-import com.example.TransportMe.storage.UserStorage;
-import com.example.TransportMe.users_pack.Client;
-import com.example.TransportMe.users_pack.Driver;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 
 public class Event {
 
-    public String eventName1;
+    public String eventName;
+    public String eventTime ;
+    /*
     public String eventName2;
     public String eventName3;
     public String eventName4;
@@ -88,5 +84,5 @@ public class Event {
 public ArrayList<String> getEvent4(){
     return Event4;
 }
-  
+  */
 }

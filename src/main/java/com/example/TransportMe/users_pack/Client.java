@@ -1,5 +1,6 @@
 package com.example.TransportMe.users_pack;
 import com.example.TransportMe.Events.Event;
+import com.example.TransportMe.Events.UserAcceptPrice;
 import com.example.TransportMe.rides.Offer;
 import com.example.TransportMe.rides.Ride;
 
@@ -7,7 +8,7 @@ public class Client extends User {
     private int id=0;
     private boolean hadFirstRide=false;
     Ride rideRequest=null;
-  Event E;
+  
     public Client(String userName, String mobileNumber,String password,String email,String birthDate){
         super(userName, mobileNumber,password,email,birthDate);
         this.id=count;
@@ -64,7 +65,10 @@ public class Client extends User {
                     setHadFirstRide(true);
                 // request resolved
                 rideRequest = null;
-                E.acceptCaptainPrice(this.userName);
+                Event e =new UserAcceptPrice();
+                ((UserAcceptPrice) e).acceptCaptainPrice(this.userName);
+                rideRequest.events.add(e);
+                
                 return true;
             }
         }

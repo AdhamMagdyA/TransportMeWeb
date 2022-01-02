@@ -19,7 +19,7 @@ public class Ride {
     public List<Offer> offers;
     private int numberOfPassengers;
 
-    public Event event;
+    public List<Event> events;
 
     public Ride(Client client, Area source, Area destination, String rideDate, int numberOfPassengers) {
         this.client = client;
