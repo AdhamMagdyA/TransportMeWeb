@@ -3,7 +3,7 @@ package com.example.TransportMe.rides;
 public class Area {
     public boolean hasDiscount = false;
     public String name;
-    Area(String n)
+    public Area(String n)
     {
         name = n;
     }

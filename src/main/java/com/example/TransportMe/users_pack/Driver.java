@@ -1,4 +1,5 @@
 package com.example.TransportMe.users_pack;
+import com.example.TransportMe.rides.Area;
 import com.example.TransportMe.rides.Offer;
 import com.example.TransportMe.rides.Ride;
 
@@ -10,7 +11,7 @@ import com.example.TransportMe.storage.RideListStorage;
 public class Driver extends User{
     private int id;
     private String drivingLicense, nationalID;
-    public ArrayList<String> favAreas = new ArrayList<String>();
+    public ArrayList<Area> favAreas = new ArrayList<Area>();
     // should be deleted
     // public ArrayList<Ride> availableRides = new ArrayList<Ride>();
     public ArrayList<Rating> list = new ArrayList<Rating>();
@@ -75,7 +76,7 @@ public class Driver extends User{
         return nationalID;
     }
     public void setFavAreas(String area){
-        favAreas.add(area);
+        favAreas.add(new Area(area) );
     }
 
     public void arrivedToUserLocation(String userName){

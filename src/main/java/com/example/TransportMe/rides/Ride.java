@@ -55,8 +55,8 @@ public class Ride {
     public boolean notifyDrivers(String source) {
         boolean found = false;
         for (Driver driver : userStorage.getRegisteredDrivers()) {
-            for (String area : driver.favAreas) {
-                if (area.equals(source) && driver.getAvailableForHandlingRequests()) {
+            for (Area area : driver.favAreas) {
+                if (area.name.equals(source) && driver.getAvailableForHandlingRequests()) {
 //                    driver.availableRides.add(this);
                     found = true;
                 }
