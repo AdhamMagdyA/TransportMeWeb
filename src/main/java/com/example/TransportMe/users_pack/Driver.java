@@ -32,34 +32,32 @@ public class Driver extends User{
         this.availableForHandlingRequests = true;
     }
 
-    public boolean listRides(String sourceArea){
-        boolean found=false;
+    public ArrayList<Ride> listRides(String sourceArea){
+        ArrayList<Ride> rides=null;
         for (Ride ride: RideListStorage.rides){
             if(ride.getSource().equals(sourceArea)){
-                ride.getRideInfo();
-                found=true;
+                rides.add(ride);
             }
         }
-        return found;
+        return rides;
     }
 
-    public void suggestPrice(double price,int rideId){
+    public boolean suggestPrice(double price,int rideId){
         for(Ride ride: RideListStorage.rides){
             if(ride.getId()==rideId){
                 Offer offer = new Offer(ride,price,this);
                 Event e=new CaptainPutPrice();
                 ((CaptainPutPrice) e).setRidePrice(this.userName,price);
                 ride.events.add(e);
-               
+               return  true;
             }
         }
+        return  false;
     }
-    public void showRatingList() {
-        for (Rating rating : list){
-            System.out.println("rating is :" +rating.rating);
-            System.out.println("Client name is :" +rating.client.getUsername());
-            System.out.println("=================================");
-        }
+
+    public ArrayList<Rating> showRatingList() {
+
+        return list ;
     }
     public double calculateAverageRating() {
         int sum = 0;
