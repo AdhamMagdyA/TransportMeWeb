@@ -19,7 +19,7 @@ public class UserListStorage extends UserStorage{
     public static ArrayList<Ride> ridesEvents=new ArrayList<>();
 
     public UserListStorage(){
-        registeredUsers.add(new User("admin","011","admin","admin"));
+        registeredUsers.add(new User("admin","011","admin","admin","12/12"));
     }
 
     @Override
