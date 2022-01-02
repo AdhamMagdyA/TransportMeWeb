@@ -1,7 +1,11 @@
 package com.example.TransportMe.users_pack;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.TransportMe.Events.Event;
 import com.example.TransportMe.rides.Area;
+import com.example.TransportMe.rides.Ride;
+import com.example.TransportMe.storage.RideListStorage;
 import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
 
@@ -17,24 +21,24 @@ public class Admin extends User{
         userStorage.addPendingRegistration(driver);
     }
 
-    /* commented until transformed to use database abstraction
+    /* commented until transformed to use database abstraction*/
     public static void suspendUser (String username){
-         for( User user : TransportMe.registeredUsers ) {
+         for( User user : UserListStorage.registeredUsers ) {
              if(user.getUsername().equals(username) ){
-                 TransportMe.registeredUsers.remove(user);
-                 TransportMe.suspendedUsers.add(user);
+                UserListStorage.registeredUsers.remove(user);
+                UserListStorage.suspendedUsers.add(user);
          }
          }
     }
     public static void unSuspendUser(String username) {
-        for (User user : TransportMe.registeredUsers) {
+        for (User user : UserListStorage.registeredUsers) {
             if (user.getUsername().equals(username)) {
-                TransportMe.registeredUsers.add(user);
-                TransportMe.suspendedUsers.remove(user);
+                UserListStorage.registeredUsers.add(user);
+                UserListStorage.suspendedUsers.remove(user);
             }
 
         }
-    }*/
+    }
 
     // transformed to use UserStorage instead of TransportMe
     public void listPendingRegistrations(){
@@ -68,6 +72,20 @@ public class Admin extends User{
     // removing discount to area
     public void removeDiscount(Area area){
         area.setHasDiscount(false);
+    }
+
+
+    public ArrayList<Event> showEvents(int rideID){
+        
+        Ride r=null;
+        for( Ride ride : RideListStorage.rides) {
+            if(ride.getId()== rideID ){
+                r=ride;
+                
+        }
+        }
+        return r.events;
+      
     }
 
     // no need for this function for now

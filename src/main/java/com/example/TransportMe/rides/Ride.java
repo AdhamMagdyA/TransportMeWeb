@@ -3,6 +3,8 @@ import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
 import com.example.TransportMe.users_pack.Client;
 import com.example.TransportMe.users_pack.Driver;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.TransportMe.Events.Event;
@@ -21,7 +23,7 @@ public class Ride {
     public Offer acceptedOffer;
     private int numberOfPassengers;
 
-    public List<Event> events;
+    public ArrayList<Event> events;
 
     public Ride(Client client, Area source, Area destination, String rideDate, int numberOfPassengers) {
         this.client = client;

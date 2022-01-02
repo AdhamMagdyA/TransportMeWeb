@@ -32,11 +32,7 @@ public class RideListStorage extends RideStorage{
     public  ArrayList<Ride> getRides() {
         return rides;
     }
-    @Override
-    public  ArrayList<Ride> getRidesEvents() {
-
-        return ridesEvents;
-    }
+   
 
 
 }
