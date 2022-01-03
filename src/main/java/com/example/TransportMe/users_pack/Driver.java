@@ -16,7 +16,7 @@ public class Driver extends User{
     private String drivingLicense, nationalID;
     public ArrayList<Area> favAreas = new ArrayList<Area>();
     Ride ride;
-    // should be deleted
+    // should deleted
     // public ArrayList<Ride> availableRides = new ArrayList<Ride>();
     public ArrayList<Rating> list = new ArrayList<Rating>();
     private boolean availableForHandlingRequests;

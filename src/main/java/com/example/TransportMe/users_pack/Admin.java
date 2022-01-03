@@ -64,12 +64,12 @@ public class Admin extends User{
         return false;
     }
 
-    // adding discount to area
+    // make discount for area by admin
     public void addDiscount(Area area){
         area.setHasDiscount(true);
     }
 
-    // removing discount to area
+    // removing discount to area by admin
     public void removeDiscount(Area area){
         area.setHasDiscount(false);
     }

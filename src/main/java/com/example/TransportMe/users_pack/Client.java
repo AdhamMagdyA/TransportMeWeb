@@ -15,7 +15,7 @@ public class Client extends User {
         super(userName, mobileNumber,password,email,birthDate);
         this.id=count;
     }
-    // Email attribute is optional
+    //  attribute(Email) is optional
     public Client(String userName, String mobileNumber,String password){
         super(userName, mobileNumber,password);
         this.id=count;

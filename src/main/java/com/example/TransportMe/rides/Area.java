@@ -1,3 +1,4 @@
+// if area = true then it has discount
 package com.example.TransportMe.rides;
 
 public class Area {
