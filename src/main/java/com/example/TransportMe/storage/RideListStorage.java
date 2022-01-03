@@ -24,16 +24,24 @@ public class RideListStorage extends RideStorage{
 
     @Override
     public boolean addRideOffer(Offer offer,int rideId) {
-
-
-        return true;
+        for (Ride ride : rides){
+            if(ride.getId() == rideId) {
+                ride.addOffer(offer);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public  ArrayList<Ride> getRides() {
         return rides;
     }
-   
+
+    @Override
+    public ArrayList<Ride> getRidesEvents() {
+        return null;
+    }
 
 
 }

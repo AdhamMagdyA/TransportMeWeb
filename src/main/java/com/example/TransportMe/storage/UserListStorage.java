@@ -15,7 +15,7 @@ public class UserListStorage extends UserStorage{
     public static ArrayList<User> registeredUsers=new ArrayList<>() ;
     public static ArrayList<Driver> registeredDrivers =new ArrayList<>();
     public static ArrayList<Client> registeredClients=new ArrayList<>();
-    public static ArrayList<User> suspendedUsers=new ArrayList<User>();
+    public static ArrayList<User> suspendedUsers=new ArrayList<>();
 
     public static ArrayList<Ride> ridesEvents=new ArrayList<>();
 
@@ -33,7 +33,8 @@ public class UserListStorage extends UserStorage{
 
     @Override
     public boolean removeRegisteredUser(User user) {
-        return false;
+        registeredUsers.remove(user);
+        return true;
     }
 
     @Override
@@ -64,6 +65,11 @@ public class UserListStorage extends UserStorage{
     }
 
     @Override
+    public List<User> getSuspendedUsers() {
+        return suspendedUsers;
+    }
+
+    @Override
     public boolean searchRegisteredUsers(String userName) {
         for (User user : registeredUsers){
             if(user.getUsername().equals(userName))
@@ -76,6 +82,11 @@ public class UserListStorage extends UserStorage{
     public ArrayList<Ride> getRidesEvents() {
        
         return ridesEvents;
+    }
+
+    @Override
+    public void addSuspendedUser(User user) {
+        suspendedUsers.add(user);
     }
 
 }

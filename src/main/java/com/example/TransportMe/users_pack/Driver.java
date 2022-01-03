@@ -97,7 +97,8 @@ public class Driver extends User{
         ride.events.add(e);
      }  
 
-    public boolean getAvailableForHandlingRequests(){return getAvailableForHandlingRequests();}
+    public boolean getAvailableForHandlingRequests(){return this.availableForHandlingRequests;}
+
     public void setAvailableForHandlingRequests(boolean availableForHandlingRequests) {
         this.availableForHandlingRequests = availableForHandlingRequests;
     }

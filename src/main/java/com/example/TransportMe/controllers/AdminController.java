@@ -1,6 +1,7 @@
 package com.example.TransportMe.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.TransportMe.Events.Event;
 import com.example.TransportMe.rides.Ride;
@@ -33,61 +34,59 @@ public class AdminController {
     }
 
     @GetMapping("/admin/listPending")
-    public ArrayList<Driver> listPending() {
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
-        ;
-        for (Driver driver : userStorage.getPendingRegistrations()) {
-            drivers.add(driver);
-        }
-        return drivers;
-
+    public List<Driver> listPending() {
+        return userStorage.getPendingRegistrations();
     }
 
-    @PostMapping("/admin/addPending")
-    public void addPending(
-            @RequestParam("driverUserName") String driverUserName
 
-    ) {
-        ArrayList<Driver> drivers = userStorage.getRegisteredDrivers();
-        Driver d = null;
-        for (Driver driver : drivers) {
-            if (driver.getUsername().equals(driverUserName)) {
-                d = driver;
+    // we may remove this functionality
 
-                userStorage.addPendingRegistration(d);
-            }
-        }
-
-    }
+//    @PostMapping("/admin/addPending")
+//    public void addPending(
+//            @RequestParam("driverUserName") String driverUserName
+//
+//    ) {
+//        ArrayList<Driver> drivers = userStorage.getRegisteredDrivers();
+//        Driver d = null;
+//        for (Driver driver : drivers) {
+//            if (driver.getUsername().equals(driverUserName)) {
+//                d = driver;
+//
+//                userStorage.addPendingRegistration(d);
+//            }
+//        }
+//
+//    }
 
     @PostMapping("/admin/suspendUser")
-    public void suspendUser(
+    public boolean suspendUser(
             @RequestParam("userName") String userName
-
     ) {
-       
-        for( User user : UserListStorage.registeredUsers ) {
+
+        for( User user : userStorage.getRegisteredUsers() ) {
             if(user.getUsername().equals(userName) ){
-               UserListStorage.registeredUsers.remove(user);
-               UserListStorage.suspendedUsers.add(user);
+               userStorage.removeRegisteredUser(user);
+               userStorage.addSuspendedUser(user);
+               return true;
+            }
         }
-        }
+        return false;
 
     }
 
     @PostMapping("/admin/unsuspendUser")
-    public void unsuspendUser(
+    public boolean unsuspendUser(
             @RequestParam("userName") String userName
-
     ) {
        
-        for( User user : UserListStorage.registeredUsers ) {
+        for( User user : userStorage.getSuspendedUsers() ) {
             if(user.getUsername().equals(userName) ){
                 UserListStorage.registeredUsers.add(user);
                 UserListStorage.suspendedUsers.remove(user);
+                return true;
+            }
         }
-        }
-
+        return false;
     }
 
     @PostMapping("/admin/acceptRegisteration")

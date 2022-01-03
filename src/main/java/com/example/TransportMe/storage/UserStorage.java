@@ -19,7 +19,11 @@ public abstract class UserStorage {
     public abstract ArrayList<Driver> getRegisteredDrivers();
     public abstract List<Driver> getPendingRegistrations();
     public abstract List<User> getRegisteredUsers();
+    public abstract List<User> getSuspendedUsers();
     public abstract boolean searchRegisteredUsers( String userName );
 
+
     public abstract ArrayList<Ride> getRidesEvents();
+
+    public abstract void addSuspendedUser(User user);
 }
