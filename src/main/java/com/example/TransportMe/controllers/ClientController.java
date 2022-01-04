@@ -47,37 +47,50 @@ public class ClientController {
         Area sourceArea = new Area(source);
         Area destinationArea = new Area(destination);
         Ride ride=new Ride((Client) userStorage.loggedIn,sourceArea,destinationArea,rideDate,numberOfPassengers);
-        rideStorage.addRideRequest(ride);
+        rideStorage.addRideRequest  (ride);
         return true;
     }
     @GetMapping("/ride/viewOffers")
     public List<Offer> viewOffers(){
-        Client client = (Client)userStorage.loggedIn;
-        List<Offer> offers = client.viewOffers();
-        return offers;
+        if(userStorage.loggedIn instanceof Client){
+            Client client = (Client)userStorage.loggedIn;
+            List<Offer> offers = client.viewOffers();
+            return offers;
+        }
+        return new ArrayList<>();
     }
     @PostMapping("/ride/acceptOffer")
     public boolean acceptOffer(
             @RequestParam("id") int id
     ){
+        if(userStorage.loggedIn instanceof Client)
+        {
             Client client = (Client)userStorage.loggedIn;
            return client.acceptOffer(id);
+        }
+        else{
+            return false;
+        }
     }
     @PostMapping("/user/addRating")
     public boolean addRating(
             @RequestParam("driverUserName") String driverUserName,
             @RequestParam("rating") int rating
     ){
-        Client client = (Client)userStorage.loggedIn;
-        ArrayList<Driver> drivers = userStorage.getRegisteredDrivers();
-        Driver d = null;
-        for (Driver driver:drivers){
-            if (driver.getUsername().equals(driverUserName)){
-                d=driver;
+        if(userStorage.loggedIn instanceof Client) {
+            Client client = (Client) userStorage.loggedIn;
+            ArrayList<Driver> drivers = userStorage.getRegisteredDrivers();
+            Driver d = null;
+            for (Driver driver : drivers) {
+                if (driver.getUsername().equals(driverUserName)) {
+                    d = driver;
+                }
             }
-        }
 
-        return client.addRating(d,rating);
+            return client.addRating(d, rating);
+        }else{
+            return true;
+        }
     }
 
 }

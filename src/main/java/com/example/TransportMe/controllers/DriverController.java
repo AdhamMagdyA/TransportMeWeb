@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class DriverController {
 
     UserStorage userStorage = new UserListStorage();
-    Driver driver = (Driver) userStorage.loggedIn;
+    //Driver driver = (Driver) userStorage.loggedIn;
     @PostMapping("/register/driver")
     public boolean registerDriver(
             @RequestParam("username") String userName,
@@ -39,19 +39,26 @@ public class DriverController {
     public boolean addFavArea(
             @RequestParam("source") String source
     ){
-        for (Area area:driver.favAreas){
+        if(userStorage.loggedIn instanceof Driver)
+        {
+            for (Area area:((Driver)userStorage.loggedIn).favAreas){
             if (area.name.equals(source))
                 return false;
+            }
+            Area area = new Area(source);
+            ((Driver)userStorage.loggedIn).favAreas.add(area);
+            return true;
+        }else{
+            return false;
         }
-        Area area = new Area(source);
-        driver.favAreas.add(area);
-        return true;
     }
     @PostMapping("/driver/listRides")
     public ArrayList<Ride> listRides(
             @RequestParam("area") String area
     ){
-        return driver.listRides(area);
+        if (userStorage.loggedIn instanceof Driver)
+            return ((Driver)userStorage.loggedIn).listRides(area);
+        return new ArrayList<>();
     }
 
     @PostMapping("/driver/suggestOffer")
@@ -59,13 +66,17 @@ public class DriverController {
             @RequestParam("price") double price,
             @RequestParam("rideId") int rideId
             ){
-        return driver.suggestPrice(price,rideId);
+        if (userStorage.loggedIn instanceof Driver)
+            return ((Driver)userStorage.loggedIn).suggestPrice(price,rideId);
+        return false;
     }
     @GetMapping("/driver/viewRatings")
     public ArrayList<Rating> viewRatings(
 
     ){
-        return driver.showRatingList();
+        if (userStorage.loggedIn instanceof Driver)
+            return ((Driver)userStorage.loggedIn).showRatingList();
+        return new ArrayList<>();
     }
 
 
