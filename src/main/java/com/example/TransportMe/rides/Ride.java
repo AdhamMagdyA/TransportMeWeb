@@ -47,7 +47,7 @@ public class Ride {
         System.out.println("Ride id is" + id);
         System.out.println("Ride source area's name is" + source);
         System.out.println("Ride destination area's name is" + destination);
-        System.out.println("Client's name is" + client.getUsername());
+        System.out.println("Client's name is" + client.getUserName());
         System.out.println("==============================");
     }
 

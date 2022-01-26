@@ -31,10 +31,15 @@ public class ClientController {
             @RequestParam("birthdate") String birthdate,
             @RequestParam(value = "email",required = false) String email
     ){
-        User user;
-        user = new Client(userName,phone,password,email,birthdate);
-        userStorage.addRegisteredUser(user);
-        return true;
+        try{
+            User user;
+            user = new Client(userName,phone,password,email,birthdate);
+            userStorage.addRegisteredUser(user);
+            return true;
+        } catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
     @PostMapping("/ride/request")
     public boolean requestRide(
@@ -82,7 +87,7 @@ public class ClientController {
             ArrayList<Driver> drivers = userStorage.getRegisteredDrivers();
             Driver d = null;
             for (Driver driver : drivers) {
-                if (driver.getUsername().equals(driverUserName)) {
+                if (driver.getUserName().equals(driverUserName)) {
                     d = driver;
                 }
             }

@@ -4,6 +4,7 @@ import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
 import com.example.TransportMe.users_pack.Admin;
 import com.example.TransportMe.users_pack.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 public class UserController {
     UserStorage userStorage = new UserListStorage();
+    private User user;
 
     @PostMapping("/login")
     public boolean login(
@@ -19,7 +21,7 @@ public class UserController {
     ){
         if (userStorage.searchRegisteredUsers(userName)){
             for(User u : userStorage.getRegisteredUsers()){
-                if(u.getUsername().equals(userName) && u.getPassword().equals(password) ){
+                if(u.getUserName().equals(userName) && u.getPassword().equals(password) ){
                     UserStorage.loggedIn = u;
                     return true;
                 }
@@ -29,8 +31,12 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public User getLoggedIn(){
-        return userStorage.loggedIn;
+    public ResponseEntity<User> getLoggedIn(){
+        user = UserStorage.loggedIn;
+        if(user == null)
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok().body(user);
     }
 
     @GetMapping("/users")
@@ -39,10 +45,10 @@ public class UserController {
     }
 
     @GetMapping("/user/{username}")
-    public User getUser(@PathVariable("username") String userName ){
+    public ResponseEntity<User> getUser(@PathVariable("username") String userName ){
         for (User user : userStorage.getRegisteredUsers()){
-            if(user.getUsername().equals(userName))
-                return user;
+            if(user.getUserName().equals(userName))
+                return ResponseEntity.ok().body(user);
         }
         return null;
     }

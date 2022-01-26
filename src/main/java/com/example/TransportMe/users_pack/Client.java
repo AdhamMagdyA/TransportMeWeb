@@ -7,19 +7,15 @@ import com.example.TransportMe.rides.Ride;
 import java.util.List;
 
 public class Client extends User {
-    private int id=0;
     private boolean hadFirstRide=false;
     Ride rideRequest=null;
   
     public Client(String userName, String mobileNumber,String password,String email,String birthDate){
         super(userName, mobileNumber,password,email,birthDate);
-        this.id=count;
     }
     //  attribute(Email) is optional
     public Client(String userName, String mobileNumber,String password){
         super(userName, mobileNumber,password);
-        this.id=count;
-
     }
 
     /* commented until transformed to use database abstraction
@@ -55,7 +51,7 @@ public class Client extends User {
         if (dr==null)
             return false;
         Rating rate = new Rating(this,r);
-        dr.list.add(rate);
+        dr.ratings.add(rate);
         return false;
     }
 

@@ -72,7 +72,7 @@ public class UserListStorage extends UserStorage{
     @Override
     public boolean searchRegisteredUsers(String userName) {
         for (User user : registeredUsers){
-            if(user.getUsername().equals(userName))
+            if(user.getUserName().equals(userName))
                 return true;
         }
         return false;

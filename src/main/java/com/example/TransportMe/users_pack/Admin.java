@@ -1,6 +1,4 @@
 package com.example.TransportMe.users_pack;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.example.TransportMe.Events.Event;
 import com.example.TransportMe.rides.Area;
@@ -9,30 +7,33 @@ import com.example.TransportMe.storage.RideListStorage;
 import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
 
+import java.util.ArrayList;
+
 public class Admin extends User{
 
-    UserStorage userStorage = new UserListStorage();
+    final static UserStorage userStorage = new UserListStorage();
 
     public Admin(String userName, String mobileNumber,String password){
         super(userName, mobileNumber,password);
     }
+
     //transformed to use UserStorage instead of TransportMe
     public void addPendingRegistrations(Driver driver){
         userStorage.addPendingRegistration(driver);
     }
 
-    /* commented until transformed to use database abstraction*/
+
     public static void suspendUser (String username){
          for( User user : UserListStorage.registeredUsers ) {
-             if(user.getUsername().equals(username) ){
+             if(user.getUserName().equals(username) ){
                 UserListStorage.registeredUsers.remove(user);
                 UserListStorage.suspendedUsers.add(user);
-         }
+            }
          }
     }
     public static void unSuspendUser(String username) {
         for (User user : UserListStorage.registeredUsers) {
-            if (user.getUsername().equals(username)) {
+            if (user.getUserName().equals(username)) {
                 UserListStorage.registeredUsers.add(user);
                 UserListStorage.suspendedUsers.remove(user);
             }
@@ -40,19 +41,11 @@ public class Admin extends User{
         }
     }
 
-    // transformed to use UserStorage instead of TransportMe
-    public void listPendingRegistrations(){
-        for (Driver driver : userStorage.getPendingRegistrations()){
-            System.out.println("driver name is :" +driver.getUsername());
-            System.out.println("driver national id is :" +driver.getNationalID());
-            System.out.println("driver driving licence is :" +driver.getDrivingLicense());
-            System.out.println("=================================");
-        }
-    }
+
     // transformed to use UserStorage instead of TransportMe
     public boolean acceptRegistration(String userName){
         for( User user : userStorage.getPendingRegistrations() ){
-            if( user.getUsername().equals(userName) ){
+            if( user.getUserName().equals(userName) ){
                 // remove from pending registration
                 userStorage.removePendingRegistration( (Driver) user );
                 // add registration to database
@@ -60,7 +53,6 @@ public class Admin extends User{
                 return true;
             }
         }
-//        System.out.println("User not found");
         return false;
     }
 
@@ -88,16 +80,4 @@ public class Admin extends User{
       
     }
 
-    // no need for this function for now
-    /* public boolean rejectRegistration(String userName){
-        for( User user : TransportMe.pendingRegistrations ){
-            if( user.getUsername().equals(userName) ){
-                TransportMe.pendingRegistrations.remove(user);
-                System.out.println("Registration rejected successfully");
-                return true;
-            }
-        }
-        System.out.println("User not found");
-        return false;
-    }*/
 }

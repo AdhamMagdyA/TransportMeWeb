@@ -64,7 +64,7 @@ public class AdminController {
     ) {
 
         for( User user : userStorage.getRegisteredUsers() ) {
-            if(user.getUsername().equals(userName) ){
+            if(user.getUserName().equals(userName) ){
                userStorage.removeRegisteredUser(user);
                userStorage.addSuspendedUser(user);
                return true;
@@ -80,7 +80,7 @@ public class AdminController {
     ) {
        
         for( User user : userStorage.getSuspendedUsers() ) {
-            if(user.getUsername().equals(userName) ){
+            if(user.getUserName().equals(userName) ){
                 UserListStorage.registeredUsers.add(user);
                 UserListStorage.suspendedUsers.remove(user);
                 return true;
@@ -96,7 +96,7 @@ public class AdminController {
     ) {
        
         for( User user : userStorage.getPendingRegistrations() ){
-            if( user.getUsername().equals(userName) ){
+            if( user.getUserName().equals(userName) ){
                 userStorage.removePendingRegistration( (Driver) user );
 
                 userStorage.addRegisteredUser(user);
