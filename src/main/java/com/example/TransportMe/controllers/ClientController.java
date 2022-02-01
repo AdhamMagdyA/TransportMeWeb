@@ -10,6 +10,7 @@ import com.example.TransportMe.storage.UserStorage;
 import com.example.TransportMe.users_pack.Client;
 import com.example.TransportMe.users_pack.Driver;
 import com.example.TransportMe.users_pack.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class ClientController {
     RideStorage rideStorage = new RideListStorage();
 
     @PostMapping("/register/client")
-    public boolean registerClient(
+    public ResponseEntity<String> registerClient(
             @RequestParam("username") String userName,
             @RequestParam("password") String password,
             @RequestParam("phone") String phone,
@@ -34,11 +35,15 @@ public class ClientController {
         try{
             User user;
             user = new Client(userName,phone,password,email,birthdate);
+            // if user is already registered
+            if(userStorage.getRegisteredUsers().contains(user))
+                return ResponseEntity.internalServerError().body("User is already registered");
+            // no problem
             userStorage.addRegisteredUser(user);
-            return true;
+            return ResponseEntity.ok().body("Registered successfully!");
         } catch (Exception e){
             System.out.println(e.toString());
-            return false;
+            return ResponseEntity.internalServerError().body(e.toString());
         }
     }
     @PostMapping("/ride/request")

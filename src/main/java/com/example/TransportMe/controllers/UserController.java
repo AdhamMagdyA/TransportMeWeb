@@ -15,33 +15,45 @@ public class UserController {
     private User user;
 
     @PostMapping("/login")
-    public boolean login(
+    public ResponseEntity<String> login(
             @RequestParam("username") String userName,
             @RequestParam("password") String password
     ){
-        if (userStorage.searchRegisteredUsers(userName)){
-            for(User u : userStorage.getRegisteredUsers()){
-                if(u.getUserName().equals(userName) && u.getPassword().equals(password) ){
-                    UserStorage.loggedIn = u;
-                    return true;
+        try {
+            if (userStorage.searchRegisteredUsers(userName)) {
+                for (User u : userStorage.getRegisteredUsers()) {
+                    if (u.getUserName().equals(userName) && u.getPassword().equals(password)) {
+                        UserStorage.loggedIn = u;
+                        return ResponseEntity.accepted().body("Logged in successfully!");
+                    }
                 }
             }
+            return ResponseEntity.internalServerError().body("Wrong credentials");
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.toString());
         }
-        return false;
     }
 
     @GetMapping("/user")
     public ResponseEntity<User> getLoggedIn(){
-        user = UserStorage.loggedIn;
-        if(user == null)
-            return ResponseEntity.noContent().build();
-        else
-            return ResponseEntity.ok().body(user);
+        try {
+            user = UserStorage.loggedIn;
+            if (user == null)
+                return ResponseEntity.noContent().build();
+            else
+                return ResponseEntity.ok().body(user);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 
     @GetMapping("/users")
-    public List<User> getRegisteredUsers(){
-        return userStorage.getRegisteredUsers();
+    public ResponseEntity<List<User>> getRegisteredUsers(){
+        try {
+            return ResponseEntity.ok().body(userStorage.getRegisteredUsers());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 
     @GetMapping("/user/{username}")

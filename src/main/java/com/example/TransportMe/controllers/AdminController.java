@@ -12,6 +12,7 @@ import com.example.TransportMe.users_pack.Admin;
 import com.example.TransportMe.users_pack.Driver;
 import com.example.TransportMe.users_pack.User;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,19 +24,32 @@ public class AdminController {
     UserStorage userStorage = new UserListStorage();
 
     @PostMapping("/register/admin")
-    public boolean registerAdmin(
+    public ResponseEntity<String> registerAdmin(
             @RequestParam("username") String userName,
             @RequestParam("password") String password,
-            @RequestParam("phone") String phone) {
-        User user;
-        user = new Admin(userName, phone, password);
-        userStorage.addRegisteredUser(user);
-        return true;
+            @RequestParam("phone") String phone
+    ){
+        try {
+            User user;
+            user = new Admin(userName, phone, password);
+            // if user is already registered
+            if (userStorage.getRegisteredUsers().contains(user))
+                return ResponseEntity.internalServerError().body("User is already registered");
+            // no problem
+            userStorage.addRegisteredUser(user);
+            return ResponseEntity.ok().body("Registration requested successfully");
+        }catch ( Exception e ){
+            return ResponseEntity.internalServerError().body(e.toString());
+        }
     }
 
     @GetMapping("/admin/listPending")
-    public List<Driver> listPending() {
-        return userStorage.getPendingRegistrations();
+    public ResponseEntity<List<Driver>> listPending() {
+        try {
+            return ResponseEntity.ok().body(userStorage.getPendingRegistrations());
+        }catch ( Exception e ){
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 
 
@@ -90,22 +104,22 @@ public class AdminController {
     }
 
     @PostMapping("/admin/acceptRegisteration")
-    public boolean acceptRegisteration(
+    public ResponseEntity<String> acceptRegisteration(
             @RequestParam("userName") String userName
-
     ) {
-       
-        for( User user : userStorage.getPendingRegistrations() ){
-            if( user.getUserName().equals(userName) ){
-                userStorage.removePendingRegistration( (Driver) user );
+       try {
+           for (User user : userStorage.getPendingRegistrations()) {
+               if (user.getUserName().equals(userName)) {
+                   userStorage.removePendingRegistration((Driver) user);
+                   userStorage.addRegisteredUser(user);
+                   return ResponseEntity.ok().body(user.getUserName() + " Registration accepted");
+               }
+           }
 
-                userStorage.addRegisteredUser(user);
-                return true;
-            }
-        }
-
-        return false;
-
+           return ResponseEntity.internalServerError().body("Registration not found");
+       }catch ( Exception e ){
+           return ResponseEntity.internalServerError().body(e.toString());
+       }
     }
     @PostMapping("/admin/showEvents")
     public ArrayList<Event> showEvents(

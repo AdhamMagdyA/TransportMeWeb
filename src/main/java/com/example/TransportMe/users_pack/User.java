@@ -2,7 +2,6 @@ package com.example.TransportMe.users_pack;
 
 import com.example.TransportMe.storage.UserListStorage;
 import com.example.TransportMe.storage.UserStorage;
-import com.fasterxml.jackson.core.JsonEncoding;
 
 public class User {
     private static final UserStorage userStorage = new UserListStorage();
@@ -16,6 +15,7 @@ public class User {
 
     // query for number of registered users
     public static int count = userStorage.getRegisteredUsers().size();
+    private User user;
 
 
     public User(String userName, String mobileNumber, String password, String email, String birthDate){
@@ -31,6 +31,12 @@ public class User {
        new User(userName,mobileNumber,password,null,null);
     }
 
+    public boolean equals(Object user){
+        User u = (User)user;
+        if( u.getUserName().equals(this.userName))
+            return true;
+        return false;
+    }
 
 
     public String getUserName() {
